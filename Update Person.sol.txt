@@ -1,0 +1,27 @@
+pragma solidity 0.5.12;
+
+contract test{
+    
+    struct Person {
+        uint age;
+        address creator;
+    }
+    
+    mapping(address => Person) public people;
+    
+    event personCreated(uint, address);
+    event personUpdated(uint, address);
+
+    function createPerson(uint _age) public {
+         if(people[msg.sender].creator == address(0)){
+            people[msg.sender].age = _age;
+            people[msg.sender].creator = msg.sender;
+            emit personCreated(_age, msg.sender);
+              }
+              else{
+                uint oldAge = people[msg.sender].age;
+                people[msg.sender].age = _age;
+                emit personUpdated(oldAge, msg.sender);
+                }
+            }
+        }
